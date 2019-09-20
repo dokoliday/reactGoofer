@@ -1,65 +1,75 @@
-const mapVoidFilter = (goofers, mapX, mapY) => {
-  let authorizeMoves = [];
-  goofers.map(goofer => {
-    console.log("je suis la", goofer)
+const whereToGo = (goofers, mapX, mapY) => {
+
+  const goofersKnowToGO = goofers.map(goofer => {
+
     if (goofer.y === 0 && goofer.x === 0) {
-      return authorizeMoves = [
+      goofer.deplacement = [
         "deplacementBas",
         "deplacementBasDroite",
         "deplacementDroite",
         "deplacementStay"
-      ]
-    } if (goofer.x === 0 && goofer.y === mapY - 1) {
-      return authorizeMoves = [
+      ];
+      return goofer;
+    } else if (goofer.y === 0 && goofer.x === mapX - 1) {
+      goofer.deplacement = [
+        "deplacementBas",
+        "deplacementGauche",
+        "deplacementBasGauche",
+        "deplacementStay"
+      ]; return goofer;
+    } else if (goofer.x === 0 && goofer.y === mapY - 1) {
+      goofer.deplacement = [
         "deplacementHaut",
         "deplacementDroite",
         "deplacementHautDroite",
         "deplacementStay"
       ]
 
-    } if (goofer.y === 0 && goofer.x === mapX - 1) {
-      return authorizeMoves = [
-        "deplacementBas",
-        "deplacementGauche",
-        "deplacementBasGauche",
-        "deplacementStay"
-      ]
-    } if (goofer.x === mapX - 1 && goofer.y === mapY - 1) {
-      return authorizeMoves = [
+    } else if (goofer.x === mapX - 1 && goofer.y === mapY - 1) {
+      goofer.deplacement = [
         "deplacementHaut",
         "deplacementGauche",
         "deplacementHautGauche",
         "deplacementStay"
-      ]
-    } if (goofer.x === 0) {
-      return authorizeMoves = [
+      ]; return goofer;
+    } else if (goofer.x === 0) {
+      goofer.deplacement = [
         "deplacementHaut",
         "deplacementBas",
         "deplacementBasDroite",
         "deplacementDroite",
         "deplacementHautDroite",
         "deplacementStay"
-      ]
-    } if (goofer.y === mapY - 1) {
-      return authorizeMoves = [
+      ]; return goofer;
+    } else if (goofer.y === 0) {
+      goofer.deplacement = [
+        "deplacementBas",
+        "deplacementBasDroite",
+        "deplacementDroite",
+        "deplacementGauche",
+        "deplacementStay",
+        "deplacementBasGauche"
+      ]; return goofer;
+    } else if (goofer.y === mapY - 1) {
+      goofer.deplacement = [
         "deplacementHautGauche",
         "deplacementHaut",
         "deplacementGauche",
         "deplacementDroite",
         "deplacementHautDroite",
         "deplacementStay"
-      ]
-    } if (goofer.x === mapX - 1) {
-      return authorizeMoves = [
+      ]; return goofer;
+    } else if (goofer.x === mapX - 1) {
+      goofer.deplacement = [
         "deplacementHautGauche",
         "deplacementHaut",
         "deplacementGauche",
         "deplacementBasGauche",
         "deplacementBas",
         "deplacementStay"
-      ]
+      ]; return goofer;
     } else {
-      return authorizeMoves = [
+      goofer.deplacement = [
         "deplacementHautGauche",
         "deplacementHaut",
         "deplacementGauche",
@@ -69,82 +79,77 @@ const mapVoidFilter = (goofers, mapX, mapY) => {
         "deplacementDroite",
         "deplacementHautDroite",
         "deplacementStay"
-      ]
+      ];
+      return goofer;
     }
   }
-  );
-  console.log(`je peux aller la`, authorizeMoves)
-  return authorizeMoves
-}
+  )
 
-const nearPeopleFilter = (goofers) => {
-  let unauthorizeMoves = [];
-  goofers.map(goofer => {
-    if (goofers.filter(other =>
-      (other.x + 1 === goofer.x && other.y + 1 === goofer.y)).length > 0) {
-      unauthorizeMoves.push("deplacementBasDroite")
+  goofersKnowToGO.map(goofer => {
+    if (goofersKnowToGO.filter(anyGoofer =>
+      (anyGoofer.x === goofer.x + 1 && anyGoofer.y === goofer.y - 1)).length > 0) {
+      console.log("tut 1")
+      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementHautDroite")
+      return goofer
     };
-    if (goofers.filter(other =>
-      (other.x === goofer.x && other.y + 1 === goofer.y)).length > 0) {
-      unauthorizeMoves.push("deplacementBas")
+    if (goofersKnowToGO.filter(anyGoofer =>
+      (anyGoofer.x === goofer.x && anyGoofer.y === goofer.y - 1)).length > 0) {
+      console.log("tut 2")
+      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementHaut")
+      return goofer
     };
-    if (goofers.filter(other =>
-      (other.x === goofer.x && other.y - 1 === goofer.y)).length > 0) {
-      unauthorizeMoves.push("deplacementHaut")
+    if (goofersKnowToGO.filter(anyGoofer =>
+      (anyGoofer.x === goofer.x && anyGoofer.y === goofer.y + 1)).length > 0) {
+      console.log("tut 3")
+      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementBas")
+      return goofer
     };
-    if (goofers.filter(other =>
-      (other.x === goofer.x + 1 && other.y === goofer.y)).length > 0) {
-      unauthorizeMoves.push("deplacementDroite")
+    if (goofersKnowToGO.filter(anyGoofer =>
+      (anyGoofer.x === goofer.x + 1 && anyGoofer.y === goofer.y)).length > 0) {
+      console.log("tut 4")
+      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementDroite")
+      return goofer
     };
-    if (goofers.filter(other =>
-      (other.x === goofer.x - 1 && other.y === goofer.y)).length > 0) {
-      unauthorizeMoves.push("deplacementGauche")
+    if (goofersKnowToGO.filter(anyGoofer =>
+      (anyGoofer.x === goofer.x - 1 && anyGoofer.y === goofer.y)).length > 0) {
+      console.log("tut 5")
+      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementGauche")
+      return goofer
     };
-    if (goofers.filter(other =>
-      (other.x === goofer.x - 1 && other.y - 1 === goofer.y)).length > 0) {
-      unauthorizeMoves.push("deplacementHautGauche")
+    if (goofersKnowToGO.filter(anyGoofer =>
+      (anyGoofer.x === goofer.x - 1 && anyGoofer.y === goofer.y - 1)).length > 0) {
+      console.log("tut 6")
+      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementHautGauche")
+      return goofer
     };
-    if (goofers.filter(other =>
-      (other.x === goofer.x + 1 && other.y - 1 === goofer.y)).length > 0) {
-      unauthorizeMoves.push("deplacementHautDroite")
+    if (goofersKnowToGO.filter(anyGoofer =>
+      (anyGoofer.x === goofer.x + 1 && anyGoofer.y === goofer.y + 1)).length > 0) {
+      console.log("tut 7")
+      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementBasDroite")
+      return goofer
     };
-    if (goofers.filter(other =>
-      (other.x === goofer.x - 1 && other.y + 1 === goofer.y)).length > 0) {
-      unauthorizeMoves.push("deplacementBasGauche")
+    if (goofersKnowToGO.filter(anyGoofer =>
+      (anyGoofer.x === goofer.x - 1 && anyGoofer.y === goofer.y + 1)).length > 0) {
+      console.log("tut 8")
+      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementBasGauche")
+      return goofer
     };
-    console.log(`${goofer.name} mais pas la `, unauthorizeMoves)
-    return unauthorizeMoves
-  })
+  }
+  )
 }
-const gooferMove = (goofers, mapX, mapY) => {
-  goofers.map(goofer => {
-    const mapVoid = mapVoidFilter(goofers, mapX, mapY);
-    const nearPeople = nearPeopleFilter(goofers);
-    const finalArrayDeplacement = mapVoid.filter(deplacement => deplacement !== nearPeople);
-    const deplacement = finalArrayDeplacement[Math.floor(Math.random() * (finalArrayDeplacement.length))]
-    console.log(`${goofer.name} finalement je peux aller la `, finalArrayDeplacement)
-    console.log(`${goofer.name} je choisie cette direction:${deplacement}`)
-    goofer[deplacement]();
+export default whereToGo;
 
-    return goofer;
-  })
-}
-export default gooferMove;
-// const authorizeMove = (goofers, mapX, mapY) => {
-//   const mapVoid = mapVoidFilter(goofers, mapX, mapY)
-//   const nearPeople = nearPeopleFilter(goofers)
-//   return mapVoid.filter(deplacement => deplacement !== nearPeople)
-// }
-
-// const gooferGo = (goofers, mapX, mapY) => {
-//   const moves = authorizeMove(goofers, mapX, mapY);
-//   console.log( "movessss",moves)
+// const gooferMove = (goofers, mapX, mapY) => {
 //   goofers.map(goofer => {
-//     goofer[moves[Math.floor(Math.random() * (moves.length))]]()
-//     return goofer
-//   }
-//   )
+//     const mapVoid = mapVoidFilter(goofers, mapX, mapY);
+//     const nearPeople = nearPeopleFilter(goofers);
+//     const finalArrayDeplacement = mapVoid.filter(deplacement => deplacement !== nearPeople);
+//     const deplacement = finalArrayDeplacement[Math.floor(Math.random() * (finalArrayDeplacement.length))]
+//     console.log(`${goofer.name} finalement je peux aller la `, finalArrayDeplacement)
+//     console.log(`${goofer.name} je choisie cette direction:${deplacement}`)
+//     goofer[deplacement]();
+
+//     return goofer;
+//   })
 // }
 
-
-// export default gooferGo;

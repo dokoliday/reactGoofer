@@ -4,7 +4,7 @@ import Goofer from './Goofer';
 import tree from "../baobab.png"
 import gooferImg from '../goofer.png'
 import faker from 'faker';
-import gooferMove from '../utils/randomeMove'
+import whereTogo from '../utils/randomeMove'
 
 
 class Map extends Component {
@@ -23,21 +23,25 @@ class Map extends Component {
     })
   };
 
-  moving() {
+  timeTomove() {
     setInterval(() => {
+      console.log("now",this.state.goofers)
       this.gooferMove();
+      console.log("after",this.state.goofers)
+
     }, this.props.time)
   };
 
   gooferMove() {
-    return this.setState({ goofers: gooferMove(this.state.goofers, this.props.x, this.props.y) })
+     this.setState({ goofers: whereTogo(this.state.goofers, this.props.x, this.props.y) });
+     this.state.goofers.map(goofer => goofer[goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))]]())
+
   }
 
   componentDidMount() {
     this.generateMap();
     this.createGoofer(this.props.nbGoofers);
-    gooferMove(this.state.goofers, this.props.x, this.props.y);
-    // this.moving();
+    this.timeTomove();
   };
 
   createGoofer(quantite) {
