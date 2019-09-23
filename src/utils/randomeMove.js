@@ -1,57 +1,57 @@
-const whereToGo = (goofers, mapX, mapY) => {
-  const nearPeople = (goofer) => {
-    if (goofers.filter(anyGoofer =>
-      (anyGoofer.x === goofer.x + 1 && anyGoofer.y === goofer.y - 1)).length > 0) {
-      console.log("mais pas la: deplacementHautDroite")
-      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementHautDroite")
-      return goofer
-    };
-    if (goofers.filter(anyGoofer =>
-      (anyGoofer.x === goofer.x && anyGoofer.y === goofer.y - 1)).length > 0) {
-      console.log("mais pas la: deplacementHaut")
-      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementHaut")
-      return goofer
-    };
-    if (goofers.filter(anyGoofer =>
-      (anyGoofer.x === goofer.x && anyGoofer.y === goofer.y + 1)).length > 0) {
-      console.log("mais pas la: deplacementBas")
-      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementBas")
-      return goofer
-    };
-    if (goofers.filter(anyGoofer =>
-      (anyGoofer.x === goofer.x + 1 && anyGoofer.y === goofer.y)).length > 0) {
-      console.log("mais pas la: deplacementDroite")
-      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementDroite")
-      return goofer
-    };
-    if (goofers.filter(anyGoofer =>
-      (anyGoofer.x === goofer.x - 1 && anyGoofer.y === goofer.y)).length > 0) {
-      console.log("mais pas la: deplacementGauche")
-      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementGauche")
-      return goofer
-    };
-    if (goofers.filter(anyGoofer =>
-      (anyGoofer.x === goofer.x - 1 && anyGoofer.y === goofer.y - 1)).length > 0) {
-      console.log("mais pas la: deplacementHautGauche")
-      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementHautGauche")
-      return goofer
-    };
-    if (goofers.filter(anyGoofer =>
-      (anyGoofer.x === goofer.x + 1 && anyGoofer.y === goofer.y + 1)).length > 0) {
-      console.log("mais pas la: deplacementBasDroite")
-      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementBasDroite")
-      return goofer
-    };
-    if (goofers.filter(anyGoofer =>
-      (anyGoofer.x === goofer.x - 1 && anyGoofer.y === goofer.y + 1)).length > 0) {
-      console.log("mais pas la: deplacementBasGauche")
-      goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementBasGauche")
-      return goofer
-    };
-  }
+const filterNearPeople = (goofers,goofer) => {
+  const arrayPeopleHere=[]
+  if (goofers.filter(anyGoofer =>
+    (anyGoofer.x === goofer.x + 1 && anyGoofer.y === goofer.y - 1)).length > 0) {
+    console.log("mais pas la: deplacementHautDroite")
+    goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementHautDroite")
+    return goofer
+  };
+  if (goofers.filter(anyGoofer =>
+    (anyGoofer.x === goofer.x && anyGoofer.y === goofer.y - 1)).length > 0) {
+    console.log("mais pas la: deplacementHaut")
+    goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementHaut")
+    return goofer
+  };
+  if (goofers.filter(anyGoofer =>
+    (anyGoofer.x === goofer.x && anyGoofer.y === goofer.y + 1)).length > 0) {
+    console.log("mais pas la: deplacementBas")
+    goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementBas")
+    return goofer
+  };
+  if (goofers.filter(anyGoofer =>
+    (anyGoofer.x === goofer.x + 1 && anyGoofer.y === goofer.y)).length > 0) {
+    console.log("mais pas la: deplacementDroite")
+    goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementDroite")
+    return goofer
+  };
+  if (goofers.filter(anyGoofer =>
+    (anyGoofer.x === goofer.x - 1 && anyGoofer.y === goofer.y)).length > 0) {
+    console.log("mais pas la: deplacementGauche")
+    goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementGauche")
+    return goofer
+  };
+  if (goofers.filter(anyGoofer =>
+    (anyGoofer.x === goofer.x - 1 && anyGoofer.y === goofer.y - 1)).length > 0) {
+    console.log("mais pas la: deplacementHautGauche")
+    goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementHautGauche")
+    return goofer
+  };
+  if (goofers.filter(anyGoofer =>
+    (anyGoofer.x === goofer.x + 1 && anyGoofer.y === goofer.y + 1)).length > 0) {
+    console.log("mais pas la: deplacementBasDroite")
+    goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementBasDroite")
+    return goofer
+  };
+  if (goofers.filter(anyGoofer =>
+    (anyGoofer.x === goofer.x - 1 && anyGoofer.y === goofer.y + 1)).length > 0) {
+    console.log("mais pas la: deplacementBasGauche")
+    goofer.deplacement = goofer.deplacement.filter(move => move !== "deplacementBasGauche")
+    return goofer
+  };
+}
 
 
-  const newArrayGoofer = goofers.map(goofer => {
+const whereToGo = (goofer, mapX, mapY) => {
     if (goofer.y === 0 && goofer.x === 0) {
       goofer.deplacement = [
         "deplacementBas",
@@ -59,9 +59,8 @@ const whereToGo = (goofers, mapX, mapY) => {
         "deplacementDroite",
         "deplacementStay"
       ];
-      nearPeople(goofer);
-      let move = goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
-      goofer[move]();
+      // filterNearPeople(goofers, goofer);
+      // goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
       return goofer
     } else if (goofer.y === 0 && goofer.x === mapX - 1) {
       goofer.deplacement = [
@@ -70,9 +69,8 @@ const whereToGo = (goofers, mapX, mapY) => {
         "deplacementBasGauche",
         "deplacementStay"
       ];
-      nearPeople(goofer);
-      let move = goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
-      goofer[move]();
+      // filterNearPeople(goofers, goofer);
+      // goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
       return goofer
     } else if (goofer.x === 0 && goofer.y === mapY - 1) {
       goofer.deplacement = [
@@ -81,9 +79,8 @@ const whereToGo = (goofers, mapX, mapY) => {
         "deplacementHautDroite",
         "deplacementStay"
       ]
-      nearPeople(goofer);
-      let move = goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
-      goofer[move]();
+      // filterNearPeople(goofers, goofer);
+      // goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
       return goofer
 
     } else if (goofer.x === mapX - 1 && goofer.y === mapY - 1) {
@@ -94,9 +91,8 @@ const whereToGo = (goofers, mapX, mapY) => {
         "deplacementStay"
       ];
       console.log(goofer)
-      nearPeople(goofer);
-      let move = goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
-      goofer[move]();
+      // filterNearPeople(goofers, goofer);
+      // goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
       console.log(goofer)
       return goofer
     } else if (goofer.x === 0) {
@@ -109,10 +105,8 @@ const whereToGo = (goofers, mapX, mapY) => {
         "deplacementStay"
       ];
       console.log(goofer)
-      nearPeople(goofer);
-
-      let move = goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
-      goofer[move]();
+      // filterNearPeople(goofers, goofer);
+      // goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
       console.log(goofer)
       return goofer
 
@@ -126,9 +120,8 @@ const whereToGo = (goofers, mapX, mapY) => {
         "deplacementBasGauche"
       ];
       console.log(goofer)
-      nearPeople(goofer);
-      let move = goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
-      goofer[move]();
+      // filterNearPeople(goofers, goofers);
+      // goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
       console.log(goofer)
       return goofer
     } else if (goofer.y === mapY - 1) {
@@ -141,9 +134,8 @@ const whereToGo = (goofers, mapX, mapY) => {
         "deplacementStay"
       ];
       console.log(goofer)
-      nearPeople(goofer);
-      let move = goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
-      goofer[move]();
+      // filterNearPeople(goofers, goofer);
+      // goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
       console.log(goofer)
       return goofer
     } else if (goofer.x === mapX - 1) {
@@ -156,10 +148,8 @@ const whereToGo = (goofers, mapX, mapY) => {
         "deplacementStay"
       ];
       console.log(goofer)
-      nearPeople(goofer);
-      let move = goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
-      goofer[move]();
-      console.log(goofer);
+      // filterNearPeople(goofer);
+      // goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
       return goofer
     } else {
       goofer.deplacement = [
@@ -173,17 +163,13 @@ const whereToGo = (goofers, mapX, mapY) => {
         "deplacementHautDroite",
         "deplacementStay"
       ];
-      nearPeople(goofer);
-      let move = goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
-      goofer[move]();
+      // filterNearPeople(goofers, goofers);
+      // goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
       return goofer
     }
   }
-  )
-  return newArrayGoofer
-}
 
-export default whereToGo;
+export { whereToGo, filterNearPeople };
 
 
 

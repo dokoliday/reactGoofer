@@ -4,7 +4,7 @@ import Goofer from './Goofer';
 import tree from "../baobab.png"
 import gooferImg from '../goofer.png'
 import faker from 'faker';
-import whereTogo from '../utils/randomeMove'
+import { whereToGo, filterNearPeople } from '../utils/randomeMove'
 
 
 class Map extends Component {
@@ -24,9 +24,18 @@ class Map extends Component {
   };
 
   timeTomove() {
-    setInterval(() => {
-       this.setState({goofers:whereTogo(this.state.goofers, this.props.x, this.props.y)});
-       console.log(this.state.goofers)
+    setInterval(async () => {
+      const newArrayGooferdeplaced = this.state.goofers.map(goofer => {
+        filterNearPeople(this.state.goofers, whereToGo(goofer, this.props.x, this.props.y));
+        let go = goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))];
+        console.log(go,'go')
+        goofer[go]();
+        return goofer;
+      });
+       this.setState({
+         goofers:newArrayGooferdeplaced
+       })
+
     }, this.props.time)
   };
 
@@ -42,12 +51,12 @@ class Map extends Component {
 
       const x = Math.ceil(Math.random() * this.props.x - 1);
       const y = Math.ceil(Math.random() * this.props.y - 1);
-       if (this.state.goofers.filter(anyGoofer =>
-        (anyGoofer.x === x  && anyGoofer.y === y).length === 0)){
-       this.state.goofers.push(new Goofer(faker.name.firstName(), x, y));
-    }else{
-     return 
-    }
+      if (this.state.goofers.filter(anyGoofer =>
+        (anyGoofer.x === x && anyGoofer.y === y).length === 0)) {
+        this.state.goofers.push(new Goofer(faker.name.firstName(), x, y));
+      } else {
+        return
+      }
     }
   };
 
@@ -55,7 +64,7 @@ class Map extends Component {
     if (!(this.state.mapGenerale.length > 0)) {
       return (<div>no data</div>)
     } else {
-      console.log(this.state.goofers)
+      console.log('tiiiiiiiiiiiiiiiiii', this.state.goofers)
       return (
         <div className="container">
           <div className="d-flex flex-row" >
