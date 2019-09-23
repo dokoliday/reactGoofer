@@ -25,30 +25,29 @@ class Map extends Component {
 
   timeTomove() {
     setInterval(() => {
-      console.log("now",this.state.goofers)
-      this.gooferMove();
-      console.log("after",this.state.goofers)
-
+       this.setState({goofers:whereTogo(this.state.goofers, this.props.x, this.props.y)});
+       console.log(this.state.goofers)
     }, this.props.time)
   };
 
-  gooferMove() {
-     this.setState({ goofers: whereTogo(this.state.goofers, this.props.x, this.props.y) });
-     this.state.goofers.map(goofer => goofer[goofer.deplacement[Math.floor(Math.random() * (goofer.deplacement.length))]]())
-
-  }
 
   componentDidMount() {
     this.generateMap();
     this.createGoofer(this.props.nbGoofers);
-    this.timeTomove();
+    this.timeTomove()
   };
 
   createGoofer(quantite) {
     for (let i = 0; i < quantite; i++) {
+
       const x = Math.ceil(Math.random() * this.props.x - 1);
       const y = Math.ceil(Math.random() * this.props.y - 1);
-      this.state.goofers.push(new Goofer(faker.name.firstName(), x, y));
+       if (this.state.goofers.filter(anyGoofer =>
+        (anyGoofer.x === x  && anyGoofer.y === y).length === 0)){
+       this.state.goofers.push(new Goofer(faker.name.firstName(), x, y));
+    }else{
+     return 
+    }
     }
   };
 
@@ -56,6 +55,7 @@ class Map extends Component {
     if (!(this.state.mapGenerale.length > 0)) {
       return (<div>no data</div>)
     } else {
+      console.log(this.state.goofers)
       return (
         <div className="container">
           <div className="d-flex flex-row" >
